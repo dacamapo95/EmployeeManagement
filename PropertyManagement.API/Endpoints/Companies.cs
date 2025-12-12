@@ -25,7 +25,9 @@ public sealed class Companies : ICarterModule
         .WithSummary("Obtener todas las compañías")
         .WithDescription("Retorna la lista completa de compañías registradas en el sistema")
         .Produces<IReadOnlyList<CompanyResponse>>(StatusCodes.Status200OK)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .RequireAuthorization();
 
         group.MapGet("/{companyId}/portals", async (
             int companyId,
@@ -44,6 +46,8 @@ public sealed class Companies : ICarterModule
         .WithDescription("Retorna la lista de portales que pertenecen a una compañía específica")
         .Produces<IReadOnlyList<PortalResponse>>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status404NotFound)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .RequireAuthorization();
     }
 }

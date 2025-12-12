@@ -53,7 +53,9 @@ public sealed class Employees : ICarterModule
         .WithSummary("Obtener lista de empleados")
         .WithDescription("Retorna una lista paginada de empleados con filtros opcionales")
         .Produces<PagedResult<EmployeeListItem>>(StatusCodes.Status200OK)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .RequireAuthorization();
 
         group.MapGet("/{id:guid}", async (
             Guid id,
@@ -72,7 +74,9 @@ public sealed class Employees : ICarterModule
         .WithDescription("Retorna los detalles completos de un empleado espec�fico")
         .Produces<EmployeeResponse>(StatusCodes.Status200OK)
         .ProducesProblem(StatusCodes.Status404NotFound)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .RequireAuthorization();
 
         group.MapPost("/", async (
             CreateEmployeeCommand command,
@@ -87,10 +91,13 @@ public sealed class Employees : ICarterModule
         })
         .WithName("CreateEmployee")
         .WithSummary("Crear nuevo empleado")
-        .WithDescription("Crea un nuevo empleado en el sistema")
+        .WithDescription("Crea un nuevo empleado en el sistema. Requiere rol de Manager o Admin.")
         .Produces<CreateEmployeeResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
-        .ProducesProblem(StatusCodes.Status409Conflict);
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .ProducesProblem(StatusCodes.Status403Forbidden)
+        .ProducesProblem(StatusCodes.Status409Conflict)
+        .RequireAuthorization();
 
         group.MapPut("/{id:guid}", async (
             [FromRoute]Guid id,
@@ -107,11 +114,14 @@ public sealed class Employees : ICarterModule
         })
         .WithName("UpdateEmployee")
         .WithSummary("Actualizar empleado")
-        .WithDescription("Actualiza la informaci�n de un empleado existente")
+        .WithDescription("Actualiza la informaci�n de un empleado existente. Requiere rol de Manager o Admin.")
         .Produces(StatusCodes.Status204NoContent)
         .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .ProducesProblem(StatusCodes.Status403Forbidden)
         .ProducesProblem(StatusCodes.Status404NotFound)
-        .ProducesProblem(StatusCodes.Status409Conflict);
+        .ProducesProblem(StatusCodes.Status409Conflict)
+        .RequireAuthorization();
 
         group.MapDelete("/{id:guid}", async (
             Guid id,
@@ -127,10 +137,13 @@ public sealed class Employees : ICarterModule
         })
         .WithName("DeleteEmployee")
         .WithSummary("Eliminar empleado")
-        .WithDescription("Realiza una eliminaci�n l�gica (soft delete) de un empleado")
+        .WithDescription("Realiza una eliminaci�n l�gica (soft delete) de un empleado. Requiere rol de Admin.")
         .Produces(StatusCodes.Status204NoContent)
         .ProducesProblem(StatusCodes.Status404NotFound)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .ProducesProblem(StatusCodes.Status403Forbidden)
+        .RequireAuthorization();
 
         group.MapGet("/roles", async (ISender sender, CancellationToken cancellationToken) =>
         {
@@ -145,7 +158,9 @@ public sealed class Employees : ICarterModule
         .WithSummary("Obtener roles de empleados")
         .WithDescription("Retorna la lista completa de roles disponibles para empleados")
         .Produces<IReadOnlyList<RoleResponse>>(StatusCodes.Status200OK)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .RequireAuthorization();
 
         group.MapGet("/statuses", async (ISender sender, CancellationToken cancellationToken) =>
         {
@@ -160,6 +175,8 @@ public sealed class Employees : ICarterModule
         .WithSummary("Obtener estatus de empleados")
         .WithDescription("Retorna la lista completa de estatus disponibles para empleados")
         .Produces<IReadOnlyList<EmployeeStatusResponse>>(StatusCodes.Status200OK)
-        .ProducesProblem(StatusCodes.Status400BadRequest);
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status401Unauthorized)
+        .RequireAuthorization();
     }
 }
