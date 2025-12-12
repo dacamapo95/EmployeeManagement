@@ -117,7 +117,7 @@ EmployeeManagement/
 ### Tecnologías
 
 - **.NET 8.0** - Framework
-- **Entity Framework Core 8** - ORM
+- **Entity Framework Core 8**, **Dapper** - ORM
 - **SQL Server 2022** - Base de datos
 - **Keycloak 23** - Autenticación OAuth2/OIDC
 - **MediatR** - CQRS pattern
