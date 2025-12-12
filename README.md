@@ -106,12 +106,12 @@ curl -X GET 'http://localhost:5000/api/redarbor' \
 
 ```
 EmployeeManagement/
-├── PropertyManagement.API/          # Presentación - Carter endpoints
-├── PropertyManagement.Application/  # Lógica de negocio - CQRS con MediatR
-├── PropertyManagement.Domain/       # Entidades y reglas de negocio
-├── PropertyManagement.Infrastructure/ # Datos - EF Core, Dapper , Repositorios
-├── PropertyManagement.Shared/       # Primitivas compartidas, Result pattern
-└── PropertyManagement.Tests/        # Tests unitarios - NUnit
+├── EmployeeManagement.API/          # Presentación - Carter endpoints
+├── EmployeeManagement.Application/  # Lógica de negocio - CQRS con MediatR
+├── EmployeeManagement.Domain/       # Entidades y reglas de negocio
+├── EmployeeManagement.Infrastructure/ # Datos - EF Core, Dapper , Repositorios
+├── EmployeeManagement.Shared/       # Primitivas compartidas, Result pattern
+└── EmployeeManagement.Tests/        # Tests unitarios - NUnit
 ```
 
 ### Tecnologías
