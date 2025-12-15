@@ -371,3 +371,4 @@ docker-compose.override.yml
 
 # Visual Studio solution files
 *.sln
+!EmployeeManagement.sln
